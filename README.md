@@ -1,1 +1,1 @@
-# algorithm-training
+# Algorithm-Training

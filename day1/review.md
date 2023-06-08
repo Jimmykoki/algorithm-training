@@ -60,3 +60,22 @@ class Solution {
     }
 }
 ```
+
+快慢指针
+
+- 快指针负责选择元素，慢指针负责新数组的下标值.
+
+```java
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int slowIndex = 0;
+        for (int fastIndex = 0; fastIndex < nums.length; fastIndex++){
+            if (nums[fastIndex] != val) {
+                nums[slowIndex] = nums[fastIndex];
+                slowIndex++;
+            }
+        }
+        return slowIndex;
+    }
+}
+```
