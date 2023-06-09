@@ -1,3 +1,5 @@
+# Algorithm-Training
+
 ### LeetCode 977.Squares of a Sorted Array
 
 暴力解法
@@ -58,6 +60,48 @@ class Solution {
             }
         }
         return miniLength < Integer.MAX_VALUE ? miniLength : 0;
+    }
+}
+```
+
+### Leetcode 59. Spiral Matrix II
+
+- 循环不变量，
+- 明确循环次数，n \* n 的矩阵中需要循环的次数是 n/2, n 为奇数时，需要为内环中的最后一个值手动赋值
+- 在对“边”的赋值时，明确赋值的区间范围，比如：左闭右开或左闭右闭，整个循环中必须遵循当前设定
+
+```java
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        int startX = 0;
+        int startY = 0;
+        int offSet = 1;
+        int count = 1;
+        int i = 0, j = 0;
+        while(startX * 2 < n) {
+            i = startX;
+            j = startY;
+            for (; j < n - offSet; j++){
+                res[i][j] = count++;
+            }
+            for(; i < n - offSet; i++) {
+                res[i][j] = count++;
+            }
+            for (; j > startX ; j--){
+                res[i][j] = count++;
+            }
+            for (; i > startY; i--){
+                res[i][j] = count++;
+            }
+            startX++;
+            startY++;
+            offSet++;
+        }
+         if (n %2 ==1){
+             res[startX -1][startY -1] = count;
+         }
+         return res;
     }
 }
 ```
