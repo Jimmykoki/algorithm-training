@@ -178,4 +178,25 @@ class Solution {
 }
 ```
 
-迭代写法
+递归写法
+
+- 思路与双指针一致，初始值的赋值明确 pre = null, current = head
+- 递归函数必须包含终止条件，current = null; 返回 return 新的 head (pre)
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+      return reverse(null, head);
+    }
+    private ListNode reverse(ListNode pre, ListNode currentNode){
+        //set a end condition
+        if (currentNode == null) {
+          return pre;
+        }
+        ListNode temp = null;
+        temp = currentNode.next;
+        currentNode.next = pre;
+        return reverse(currentNode, temp);
+    }
+}
+```
