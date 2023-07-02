@@ -122,7 +122,7 @@ class Solution {
 }
 ```
 
-### Leetcode 222
+### Leetcode 222 Count Complete Tree Nodes
 
 递归解法
 
@@ -140,6 +140,38 @@ class Solution {
         int rightcount = countNodes(root.right); // right
         int counts = leftcount + rightcount + 1; // mid
         return counts;
+    }
+}
+```
+
+完全二叉树特性写法
+
+- 如果子节点是满二叉树可以直接用公式 2^ depth - 1
+- 分别递归左孩子，和右孩子，递归到某一深度一定会有左孩子或者右孩子为满二叉树
+- 在完全二叉树中，如果递归向左遍历的深度等于递归向右遍历的深度，那说明就是满二叉树
+
+```java
+class Solution {
+    public int countNodes(TreeNode root) {
+        if(root == null) return 0;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        int leftdepth = 0, rightdepth = 0;
+        while(left != null){
+            left = left.left;
+            leftdepth++;
+        }
+        while(right != null){
+            right = right.right;
+            rightdepth++;
+        }
+        if(leftdepth == rightdepth){
+            return ( 2 << leftdepth) - 1;
+        }
+        int leftCounts = countNodes(root.left);
+        int rightCounts = countNodes(root.right);
+        int res = leftCounts + rightCounts + 1;
+        return res;
     }
 }
 ```
