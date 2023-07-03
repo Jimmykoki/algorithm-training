@@ -175,3 +175,44 @@ class Solution {
     }
 }
 ```
+
+### Leetcode
+
+- 先构建一个无向图
+- 从一点出发求这个点能到的所有点， 再求和
+
+```java
+class Solution{
+    public int reachableNodes(int n, int[][] edges, int[] restricted){
+        boolean[] isVisited = new boolean[n];
+        Set<Integer> set = new HashSet<>();
+        for(int node : restricted) set.add(node);
+        List<ArrayList<Integer>> graph = buildGraph(edges, n);
+        return doDFS(0, graph, set, isVisited);
+    }
+
+    private int doDFS(int source, List<ArrayList<Integer>> graph, Set<Integer> set, boolean[] isVisited){
+        isVisited[source] = true;
+        int reachableNodes = 1;
+        for(Integer adjacentNode : graph.get(source)){
+            if(!isVisited[adjacentNode] && !set.contains(adjacentNode)){
+                reachableNodes += doDFS(adjacentNode, graph, set, isVisited);
+            }
+        }
+        return reachableNodes;
+    }
+
+    private List<ArrayList<Integer>> buildGraph(int[][] edges, int n){
+        List<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            graph.add(new ArrayList<Integer>());
+        }
+        for(int[] edge : edges){
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+        return graph;
+    }
+}
+
+```
